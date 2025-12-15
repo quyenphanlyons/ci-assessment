@@ -4,7 +4,7 @@ name: Run faang.py daily at 15:00
 on:
   schedule:
     # Runs every day at 15:00 UTC (3:00 PM UTC)
-    - cron: '0 15 * * *'
+    - cron: '0 20 * * *'
   workflow_dispatch: # allows manual run from GitHub UI
 
 jobs:
@@ -22,15 +22,21 @@ jobs:
         with:
           python-version: '3.x'
 
-      # 3. Make faang.py executable
+      # 3. Install Python dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas matplotlib yfinance
+
+      # 4. Make faang.py executable
       - name: Make faang.py executable
         run: chmod +x faang.py
 
-      # 4. Run faang.py
+      # 5. Run faang.py
       - name: Run faang.py
         run: ./faang.py
 
-      # 5. Commit and push changes
+      # 6. Commit and push changes
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
