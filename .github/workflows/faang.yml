@@ -1,11 +1,14 @@
 
-name: Run faang.py daily at 15:00
+name: Run faang.py
 
 on:
   schedule:
     # Runs every day at 15:00 UTC (3:00 PM UTC)
-    - cron: '45 20 * * 1'
+    - cron: '04 21 * * 1'
   workflow_dispatch: # allows manual run from GitHub UI
+
+permissions:
+  contents: write  # Required for pushing commits back to the repository
 
 jobs:
   run-script:
