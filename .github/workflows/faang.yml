@@ -1,0 +1,41 @@
+
+name: Run faang.py daily at 15:00
+
+on:
+  schedule:
+    # Runs every day at 15:00 UTC (3:00 PM UTC)
+    - cron: '0 15 * * *'
+  workflow_dispatch: # allows manual run from GitHub UI
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # 2. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 3. Make faang.py executable
+      - name: Make faang.py executable
+        run: chmod +x faang.py
+
+      # 4. Run faang.py
+      - name: Run faang.py
+        run: ./faang.py
+
+      # 5. Commit and push changes
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "Automated run of faang.py" || echo "No changes to commit"
+          git push
