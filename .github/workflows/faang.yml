@@ -1,10 +1,12 @@
+# Adapted from chatGPT
+# https://chatgpt.com/c/694007a2-6174-8333-80a2-ee5ab06138b3
 
-name: Run faang.py
+name: Run faang.py every Saturday morning
 
 on:
   schedule:
-    # Runs every day at 15:00 UTC (3:00 PM UTC)
-    - cron: '04 21 * * 1'
+    # From https://crontab.guru/#05_07_*_*_6
+    - cron: '05 07 * * 6'
   workflow_dispatch: # allows manual run from GitHub UI
 
 permissions:
